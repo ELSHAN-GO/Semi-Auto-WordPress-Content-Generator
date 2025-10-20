@@ -345,6 +345,7 @@ return null;
 ## Workflow Diagram
 
 
+<pre>
 User Access
 ↓
 insert.php / queue.php (Login Required)
@@ -368,6 +369,8 @@ Remove Item from Queue
 Success Page with Edit Link
 ↓
 Process Next Item or Add More
+</pre>
+
 ---
 
 **Elshan Gozali**

@@ -6,19 +6,6 @@ A lightweight WordPress queue management system for AI-generated content creatio
 
 Semi-Auto WordPress Content Generator is a standalone WordPress integration that helps you organize and process AI-generated content. It uses a queue-based system where you add post requests, copy prompts to your preferred AI tool, and paste the generated content back to create WordPress draft posts.
 
-## Features
-
-- ✅ Queue management system for organizing content requests
-- ✅ Works with any AI tool (Claude, ChatGPT, or any other)
-- ✅ Copy-paste workflow for maximum flexibility
-- ✅ Automatic draft post creation in WordPress
-- ✅ Category assignment and slug management
-- ✅ Dark mode interface inspired by VSCode
-- ✅ One-click prompt copying to clipboard
-- ✅ Sequential processing of queue items
-- ✅ No database modifications required (uses WordPress options API)
-- ✅ Zero external dependencies
-
 ## Requirements
 
 - WordPress 5.0 or higher

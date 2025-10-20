@@ -19,7 +19,8 @@ Semi-Auto WordPress Content Generator is a standalone WordPress integration that
 ### Step 1: Download Files
 
 Download or clone this repository:
-```bash
+
+bash
 git clone https://github.com/yourusername/semi-auto-wordpress-content-generator.git
 
 ### Step 2: Upload to WordPress
@@ -136,18 +137,18 @@ Queue processor and post creator. This file:
 
 To customize the default system prompt that gets prepended to user prompts, edit `genrate.php`:
 
-php
+```php
 // Find this line:
 $default_prompt = "";
 
 // Change to your preferred default:
 $default_prompt = "You are a professional content writer. Write in a clear, engaging style with proper headings. Include relevant examples.\n\n";
-
+```
 ### Modifying Post Status
 
 By default, posts are created as drafts. To change this, edit `genrate.php`:
 
-php
+```php
 // Find:
 'post_status' => 'draft',
 
@@ -155,7 +156,7 @@ php
 'post_status' => 'publish',  // Auto-publish posts
 // or
 'post_status' => 'pending',  // Mark as pending review
-
+```
 ### Customizing Appearance
 
 All three files include embedded CSS for styling. To customize colors or fonts:
@@ -169,7 +170,7 @@ All three files include embedded CSS for styling. To customize colors or fonts:
 
 The queue is stored in WordPress options table under the key `ai_post_queue`. Each queue item contains:
 
-php
+```php
 [
 'id'       => timestamp,         // Unique identifier
 'category' => category_id,       // WordPress category ID
@@ -177,7 +178,7 @@ php
 'slug'     => 'post-slug',       // URL slug
 'prompt'   => 'AI prompt text'   // Content generation prompt
 ]
-
+```
 ## Security
 
 ### Built-in Security Features
@@ -205,16 +206,16 @@ To enhance security, add nonce verification:
 
 In the form (`insert.php` or `queue.php`):
 
-php
+```php
 <?php wp_nonce_field('ai_queue_action', 'ai_queue_nonce'); ?>
-
+```
 In form processing:
 
-php
+```php
 if (!wp_verify_nonce($_POST['ai_queue_nonce'], 'ai_queue_action')) {
 die('Security check failed');
 }
-
+```
 ## Troubleshooting
 
 ### WordPress Functions Not Found
@@ -225,12 +226,12 @@ If you see errors about undefined WordPress functions:
 - For subdirectory installations, adjust the path
 - Use absolute path if relative path doesn't work
 
-php
+```php
 // Try these alternatives:
 require_once($_SERVER['DOCUMENT_ROOT'] . '/wp-load.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/wordpress/wp-load.php');
 require_once('/var/www/html/wp-load.php');
-
+```
 ### Queue Not Saving
 
 If items aren't being saved to the queue:
@@ -239,12 +240,12 @@ If items aren't being saved to the queue:
 - Verify WordPress options table exists
 - Test option writing capability
 
-php
+```php
 // Add this to debug:
 if (!update_option('test_option', 'test_value')) {
 die('Cannot write to WordPress options');
 }
-
+```
 ### Redirect Issues
 
 If you experience redirect loops:
@@ -276,13 +277,13 @@ If the interface doesn't display correctly:
 
 **Data Storage:**
 
-php
+```php
 get_option('ai_post_queue', [])           // Retrieve queue
 update_option('ai_post_queue', $data)     // Save queue
-
+```
 **Post Creation:**
 
-php
+```php
 wp_insert_post([
 'post_title'    => 'Title',
 'post_content'  => 'Content',
@@ -290,46 +291,46 @@ wp_insert_post([
 'post_status'   => 'draft',
 'post_category' => [5]
 ])
-
+```
 **Sanitization:**
 
-php
+```php
 sanitize_text_field($text)      // Clean text input
 sanitize_title($slug)           // Clean URL slug
 sanitize_textarea_field($text)  // Clean textarea input
-
+```
 **Authentication:**
 
-php
+```php
 is_user_logged_in()            // Check if user is logged in
 wp_login_url()                 // Get login page URL
 wp_redirect($url)              // Safe redirect
-
+```
 **Categories:**
 
-php
+```php
 get_categories(['hide_empty' => false])  // Get all categories
-
+```
 ### Custom Helper Functions
 
 **Get Queue Count:**
 
-php
+```php
 function ai_queue_count() {
 $queue = get_option('ai_post_queue', []);
 return count($queue);
 }
-
+```
 **Clear Queue:**
 
-php
+```php
 function ai_clear_queue() {
 update_option('ai_post_queue', []);
 }
-
+```
 **Get Specific Item:**
 
-php
+```php
 function ai_get_queue_item($id) {
 $queue = get_option('ai_post_queue', []);
 foreach ($queue as $item) {
@@ -339,6 +340,7 @@ return $item;
 }
 return null;
 }
+```
 
 ## Workflow Diagram
 
@@ -366,78 +368,6 @@ Remove Item from Queue
 Success Page with Edit Link
 ↓
 Process Next Item or Add More
-
-## Future Enhancements
-
-Planned features for future versions:
-
-- [ ] WordPress plugin version for easier installation
-- [ ] Direct API integration with Claude and OpenAI
-- [ ] Bulk operations for queue management
-- [ ] Queue item editing capabilities
-- [ ] Custom post type support
-- [ ] Import and export queue functionality
-- [ ] Scheduled publishing options
-- [ ] Email notifications on completion
-- [ ] REST API endpoints
-- [ ] Visual dashboard for queue management
-- [ ] Multi-language interface support
-- [ ] Template system for common prompts
-- [ ] Analytics and usage reports
-
-## Contributing
-
-Contributions are welcome! Here's how you can help:
-
-- Report bugs by opening an issue
-- Suggest new features in discussions
-- Submit pull requests with improvements
-- Improve documentation
-- Share your use cases and workflows
-
-### Development Guidelines
-
-- Follow WordPress coding standards
-- Add comments for complex logic
-- Test on multiple WordPress versions
-- Sanitize all user inputs
-- Use WordPress core functions when available
-
-## License
-
-This project is licensed under the MIT License.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the software.
-
-The software is provided "as is" without warranty of any kind.
-
-## Support
-
-For help and support:
-
-- Read this documentation thoroughly
-- Check the troubleshooting section
-- Open an issue on GitHub for bugs
-- Start a discussion for questions
-- Review existing issues before creating new ones
-
-## Credits
-
-Built with WordPress core functions and modern web technologies. Designed for content creators who want to streamline their AI-assisted writing workflow.
-
-## Changelog
-
-### Version 1.0.0 - Initial Release
-
-- Queue management system
-- Three main interface files
-- Dark mode VSCode-inspired UI
-- WordPress integration
-- Category and metadata support
-- Clipboard copy functionality
-- Draft post creation
-- Sequential queue processing
-
 ---
 
 **Elshan Gozali**
